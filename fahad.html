@@ -17,7 +17,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Geist+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
       /* ═══════════════════════════════════════════════════════════════
@@ -33,6 +33,9 @@
         --box-pad-x:     2.5rem;
         --box-header-mb: 2.5rem;
         --detail-row-mb: 2rem;
+
+        /* Typography */
+        --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       }
 
       /* ─── Reset & Base ─────────────────────────────────────────── */
@@ -41,11 +44,16 @@
       body {
         margin: 0;
         background: #000;
-        color: #989898;
-        font-family: system-ui, sans-serif;
+        color: rgba(235,235,235,0.78);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.55;
+        text-rendering: optimizeLegibility;
         overflow-x: hidden;
-        text-align: justify;
+        text-align: left;
       }
+      p { letter-spacing: 0.005em; }
 
       /* Custom cursor — desktop/fine-pointer only */
       @media (pointer: fine) {
@@ -131,7 +139,7 @@
         padding: 0.75rem 1.5rem;
       }
       .nav-logo {
-        font-family:'DM Serif Display',serif; font-size:1.5rem; color:#fff;
+        font-family:'DM Serif Display',serif; font-weight: 200; font-size:1.6rem; color:#fff;
         display:inline-flex; align-items:center; justify-content:center;
         width:2rem; height:2rem; text-decoration: none;
         transition: text-shadow 280ms ease; flex-shrink: 0;
@@ -226,63 +234,11 @@
         letter-spacing: 0.28em; text-transform: uppercase; color: #989898;
       }
       .box-body {
-        font-size: clamp(0.95rem, 2vw, 1.2rem); line-height: 1.75; color: #c0c0c0;
+        font-size: clamp(0.95rem, 2vw, 1.15rem); line-height: 1.55; color: rgba(235,235,235,0.78);
         border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;
       }
       .box-body p { margin: 0; }
       .box-body p + p { margin-top: 1rem; }
-
-      /* ─── Companies ────────────────────────────────────────────── */
-      .section-companies { padding-top: 3rem; padding-bottom: 6rem; }
-      .companies-heading { text-align: center; margin-bottom: 1rem; padding: 0 var(--page-x); }
-      .companies-title {
-        opacity: 0; transform: translateY(14px);
-        transition: opacity 600ms cubic-bezier(0.22,1,0.36,1), transform 600ms cubic-bezier(0.22,1,0.36,1);
-      }
-      #companies-block.companies-visible .companies-title { opacity:1; transform:none; }
-
-      /* Arc fan */
-      .arc-stage {
-        height: 300px; position: relative;
-        display: flex; align-items: flex-end; justify-content: center;
-        overflow: visible;
-      }
-      .arc-card {
-        width: 170px; height: 220px; position: absolute; bottom: 0;
-        border-radius: 1.4rem; display: flex; flex-direction: column;
-        align-items: center; justify-content: center;
-        border: 1px solid rgba(255,255,255,0.07); background: rgba(10,10,10,0.45);
-        overflow: hidden; cursor: pointer;
-        transition: transform 420ms cubic-bezier(0.22,1,0.36,1), box-shadow 420ms ease,
-                    border-color 320ms ease, background 420ms ease;
-        transform-origin: bottom center;
-      }
-      .arc-card::before {
-        content:''; position:absolute; top:0; left:0; right:0; height:1px;
-        background:linear-gradient(to right,transparent,rgba(165,20,12,0.35),transparent);
-        pointer-events:none;
-      }
-      .arc-card:nth-child(1) { transform: rotate(-14deg) translateX(-400px); z-index:1; opacity:0; }
-      .arc-card:nth-child(2) { transform: rotate(-8deg)  translateX(-264px); z-index:2; opacity:0; }
-      .arc-card:nth-child(3) { transform: rotate(-2deg)  translateX(-128px); z-index:3; opacity:0; }
-      .arc-card:nth-child(4) { transform: rotate(2deg)   translateX(128px);  z-index:3; opacity:0; }
-      .arc-card:nth-child(5) { transform: rotate(8deg)   translateX(264px);  z-index:2; opacity:0; }
-      .arc-card:nth-child(6) { transform: rotate(14deg)  translateX(400px);  z-index:1; opacity:0; }
-      #companies-block.companies-visible .arc-card:nth-child(1) { opacity:1; transform: rotate(-14deg) translateX(-400px); transition-delay:  80ms; }
-      #companies-block.companies-visible .arc-card:nth-child(2) { opacity:1; transform: rotate(-8deg)  translateX(-264px); transition-delay: 160ms; }
-      #companies-block.companies-visible .arc-card:nth-child(3) { opacity:1; transform: rotate(-2deg)  translateX(-128px); transition-delay: 240ms; }
-      #companies-block.companies-visible .arc-card:nth-child(4) { opacity:1; transform: rotate(2deg)   translateX(128px);  transition-delay: 320ms; }
-      #companies-block.companies-visible .arc-card:nth-child(5) { opacity:1; transform: rotate(8deg)   translateX(264px);  transition-delay: 400ms; }
-      #companies-block.companies-visible .arc-card:nth-child(6) { opacity:1; transform: rotate(14deg)  translateX(400px);  transition-delay: 480ms; }
-      .arc-card:hover {
-        transform: rotate(0deg) translateY(-28px) scale(1.07) !important;
-        z-index: 10 !important;
-        border-color: rgba(165,20,12,0.30);
-        box-shadow: 0 24px 70px rgba(165,20,12,0.22), 0 8px 30px rgba(0,0,0,0.7);
-        background: rgba(8,8,8,0.88);
-      }
-      .arc-card img { width:80%; height:auto; filter:brightness(0.82); transition:filter 350ms ease; pointer-events:none; }
-      .arc-card:hover img { filter:brightness(1.05); }
 
       /* ─── Sky divider ──────────────────────────────────────────── */
       .section-divider { padding-top:var(--divider-y); padding-bottom:var(--divider-y); }
@@ -338,10 +294,6 @@
         filter:brightness(1.06) grayscale(0);
         animation:spin3x 1.2s cubic-bezier(0.45,0.05,0.55,0.95) forwards;
       }
-      @keyframes spin3x {
-        from { transform: rotate(0deg); }
-        to   { transform: rotate(360deg); }
-      }
       .detail-divider {
         width:1px; align-self:stretch; flex-shrink:0;
         background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.07) 30%,rgba(255,255,255,0.07) 70%,transparent);
@@ -352,7 +304,7 @@
         justify-content: center;
       }
       .detail-copy {
-        flex:1; font-size:clamp(0.9rem, 2vw, 1.2rem); line-height:1.75; color:#c0c0c0;
+        flex:1; font-size:clamp(0.9rem, 2vw, 1.15rem); line-height:1.55; color:rgba(235,235,235,0.78);
         margin:0; padding:0.8rem 2rem 0rem 2rem;
       }
 
@@ -415,7 +367,7 @@
         margin:0 0 0.4rem; font-size:0.9rem; font-weight:500;
         letter-spacing:0.22em; text-transform:uppercase; color:#fff;
       }
-      .impact-desc { margin:0; font-size:clamp(0.9rem, 2vw, 1.2rem); line-height:1.75; color:#c0c0c0; }
+      .impact-desc { margin:0; font-size:clamp(0.9rem, 2vw, 1.15rem); line-height:1.55; color:rgba(235,235,235,0.78); }
 
       /* ─── Footer ───────────────────────────────────────────────── */
       .site-footer {
@@ -604,30 +556,12 @@
             <span class="name-grad" style="display:inline-block; font-size:clamp(2.2rem,9vw,5.2rem); line-height:1; letter-spacing:0.16em;">FAHAD RIAZ</span>
           </h1>
           <div class="hero-line"></div>
-          <p class="hero-sub" style="margin:0.85rem 0 0; font-family:'Geist Mono',monospace; font-size:clamp(0.65rem,2.5vw,0.85rem); font-weight:400; letter-spacing:0.28em; text-transform:uppercase; color:#989898;">
+          <p class="hero-sub" style="margin:0.85rem 0 0; font-size:clamp(0.65rem,2.5vw,0.85rem); font-weight:500; letter-spacing:0.28em; text-transform:uppercase; color:#989898;">
             Business Leader
           </p>
         </div>
       </section>
 
-      <!-- ══════════ COMPANIES ══════════ -->
-      <section id="companies" class="page-section section-companies" style="margin-bottom:60px;">
-        <div id="companies-block">
-          <div class="companies-title companies-heading">
-            <p style="margin:0; font-size:clamp(1.5rem,4vw,2.4rem); font-weight:500; line-height:1.25; color:#fff; font-family:'DM Serif Display',serif;">
-              COMPANIES
-            </p>
-          </div>
-          <div class="arc-stage">
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-motors.svg"       alt="Milele Motors" /></div>
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-luxury.svg"       alt="Milele Luxury Cars" /></div>
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-developments.svg" alt="Milele Developments" /></div>
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-car-rental.svg"   alt="Milele Car Rental" /></div>
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-gourmet.svg"      alt="Milele Gourmet" /></div>
-            <div class="arc-card"><img loading="lazy" src="./Public/milele-properties.svg"   alt="Milele Properties" /></div>
-          </div>
-        </div>
-      </section>
 
       <!-- ══════════ ABOUT ══════════ -->
       <section id="about" class="page-section reveal">
@@ -677,7 +611,7 @@
         <div class="inner">
           <div style="width:100%; max-width:var(--content-max);">
 
-            <div class="detail-row">
+            <a href="https://www.milele.com/" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Motors.svg" alt="Milele Motors" />
               </div>
@@ -686,9 +620,9 @@
                 <span class="venture-title">Milele Motors</span>
                 <p class="detail-copy">Tax-free automotive export powerhouse serving Africa, Asia, and the Middle East. End-to-end vehicle procurement, export management, and logistics — delivering seamless cross-border mobility solutions at scale.</p>
               </div>
-            </div>
+            </a>
 
-            <div class="detail-row">
+            <a href="https://www.milele.com/" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Luxury.svg" alt="Milele Luxury Cars" />
               </div>
@@ -697,9 +631,9 @@
                 <span class="venture-title">Milele Luxury Cars</span>
                 <p class="detail-copy">Premium automotive experiences curated for discerning clients. From exotic sports cars to luxury sedans — access to the world's finest vehicles with white-glove service and exclusive fleet options.</p>
               </div>
-            </div>
+            </a>
 
-            <div class="detail-row">
+            <a href="#" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Developments.svg" alt="Milele Developments" />
               </div>
@@ -708,9 +642,9 @@
                 <span class="venture-title">Milele Real Estate</span>
                 <p class="detail-copy">Visionary real estate development focused on luxury living and strategic urban projects. Building spaces where design meets functionality, creating environments that elevate everyday life across Dubai's prime locations.</p>
               </div>
-            </div>
+            </a>
 
-            <div class="detail-row">
+            <a href="https://www.milelecarrental.com/" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Car-Rental.svg" alt="Milele Car Rental" />
               </div>
@@ -719,9 +653,9 @@
                 <span class="venture-title">Milele Car Rental</span>
                 <p class="detail-copy">Short and long-term vehicle rental solutions powered by technology and operational precision. Flexible mobility options for business travelers and residents, backed by responsive service and diverse fleet selection.</p>
               </div>
-            </div>
+            </a>
 
-            <div class="detail-row">
+            <a href="#" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Gourmet.svg" alt="Milele Gourmet" />
               </div>
@@ -730,9 +664,9 @@
                 <span class="venture-title">Milele Gourmet</span>
                 <p class="detail-copy">Culinary experiences that merge quality ingredients with efficient execution. From curated dining to gourmet provisions — delivering taste and convenience without compromise for the modern lifestyle.</p>
               </div>
-            </div>
+            </a>
 
-            <div class="detail-row">
+            <a href="https://mileleproperty.com/" class="detail-row">
               <div class="detail-logo-zone">
                 <img loading="lazy" src="./Public/ventures/milele-Properties.svg" alt="Milele Properties" />
               </div>
@@ -741,7 +675,7 @@
                 <span class="venture-title">Milele Properties</span>
                 <p class="detail-copy">Luxury property solutions and real estate services for investors and residents. Strategic acquisitions, premium listings, and property management — making high-end real estate access seamless and transparent.</p>
               </div>
-            </div>
+            </a>
 
           </div>
         </div>
@@ -842,8 +776,8 @@
     <!-- ══════════ FOOTER ══════════ -->
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <span style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:#989898; letter-spacing:0.1em;">FR</span>
-        <span style="font-family:'Geist Mono',monospace; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:rgb(152,152,152);">
+        <span style="font-family:'DM Serif Display',serif; font-weight:400; font-size:1.3rem; color:#989898; letter-spacing:0.08em;">FR</span>
+        <span style="font-size:0.8rem; letter-spacing:0.18em; text-transform:uppercase; color:rgb(152,152,152);">
           &copy; <span id="year"></span> Fahad Riaz. All rights reserved.
         </span>
       </div>
