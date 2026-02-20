@@ -24,15 +24,16 @@
          SPACING TOKENS
          ═══════════════════════════════════════════════════════════════ */
       :root {
-        --page-x:        4rem;
+        --page-x:        2.5rem;
         --section-y:     5rem;
         --divider-y:     2.5rem;
-        --inner-max:     70rem;
-        --content-max:   62rem;
+        --inner-max:     84rem;
+        --content-max:   76rem;
         --box-pad-y:     3rem;
         --box-pad-x:     2.5rem;
         --box-header-mb: 2.5rem;
         --detail-row-mb: 2rem;
+        --content-gap:   1rem;
 
         /* Typography */
         --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -142,7 +143,7 @@
         inset: 0;
         display: inline-block;
 
-        /* “Contrast” look: you can tune this */
+        /* "Contrast" look: you can tune this */
         color: #fff;
         text-shadow: 0 0 18px rgba(0,0,0,0.55);
 
@@ -281,15 +282,15 @@
         color: #fff; font-family:'DM Serif Display',serif;
       }
       .section-sub {
-        margin: 0.35rem 0 0; font-size: 0.85rem; font-weight: 500;
+        margin: calc(var(--content-gap) * 0.35) 0 0; font-size: 0.85rem; font-weight: 500;
         letter-spacing: 0.28em; text-transform: uppercase; color: #989898;
       }
       .box-body {
         font-size: clamp(0.95rem, 2vw, 1.15rem); line-height: 1.55; color: rgba(235,235,235,0.78);
-        border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.05); padding-top: var(--content-gap);
       }
       .box-body p { margin: 0; }
-      .box-body p + p { margin-top: 1rem; }
+      .box-body p + p { margin-top: var(--content-gap); }
 
       /* ─── Sky divider ──────────────────────────────────────────── */
       .section-divider { padding-top:var(--divider-y); padding-bottom:var(--divider-y); }
@@ -322,13 +323,13 @@
 
       .venture-title {
         font-size: 1.1rem; font-weight: 500; letter-spacing: 0.22em;
-        text-transform: uppercase; color: #fff; padding: 0 0 0 2rem;
+        text-transform: uppercase; color: #fff; padding: 0 0 0 var(--box-pad-x);
         display: block;
       }
       .detail-logo-zone {
         flex: 0 0 15%; align-self: stretch;
         display: flex; align-items: center; justify-content: center;
-        padding: 0.5rem; position: relative; overflow: hidden;
+        ; position: relative; overflow: hidden;
       }
       .detail-logo-zone::after {
         content:''; position:absolute; inset:0;
@@ -344,6 +345,28 @@
       .detail-row:hover .detail-logo-zone img {
         filter:brightness(1.06) grayscale(0);
         animation:spin3x 1.2s cubic-bezier(0.45,0.05,0.55,0.95) forwards;
+      }
+      /* Impact section: image on right, blend to black, blur */
+      #impact .detail-logo-zone img {
+        object-fit: cover;
+        border-radius: 5%;
+        filter: blur(0.7px) brightness(0.88);
+        transition: filter 400ms ease;
+      }
+      #impact .detail-row:hover .detail-logo-zone img {
+        filter: blur(0.5px) brightness(0.95);
+        animation: none;
+      }
+      #impact .detail-logo-zone::after {
+        background: linear-gradient(to right, #000 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.4) 55%, transparent 85%);
+        opacity: 1;
+        pointer-events: none;
+      }
+      #impact .detail-logo-zone {
+        flex: 0 0 auto;
+        width: min(38%, 320px);
+        aspect-ratio: 1 / 1;
+        align-self: center;
       }
       .detail-divider {
         width:1px; align-self:stretch; flex-shrink:0;
@@ -361,7 +384,7 @@
         font-weight: 500;
         line-height: 1.5;
         flex:1; 
-        margin:0; padding:0.8rem 2rem 0rem 2rem;
+        margin:0; padding:var(--content-gap) 0 0 var(--box-pad-x);
       }
 
       /* ─── Socials wrapper ──────────────────────────────────────── */
@@ -388,20 +411,86 @@
         margin:0 auto; display:flex; flex-direction:column; position:relative; z-index:2;
       }
       .sc-section { padding-top:var(--section-y); padding-bottom:var(--section-y); }
+      /* About & Ventures: same vertical padding as detail-row */
+      #about.sc-section, #ventures.sc-section {
+        padding-top: var(--box-pad-y);
+        padding-bottom: var(--box-pad-y);
+      }
+
+      /* ─── Impact items inside box ─────────────────────────────── */
+      #impact .detail-row {
+        border: none;
+        background: none;
+        box-shadow: none;
+        margin-bottom: 0;
+      }
+      #impact .detail-row::before { display: none; }
+      #impact .detail-row:hover { border: none; box-shadow: none; }
+      /* Fix 2: gap comes from padding on each row, not margins */
+      #impact .box-body { gap: 0; }
+      .impact-item-divider {
+        width: 100%; height: 1px;
+        background: linear-gradient(to right, rgba(165,20,12,0.2), rgba(255,255,255,0.05) 50%, transparent);
+      }
+
+      /* Fix 3: mobile — impact image above text, stats in 2 cols */
+      @media (max-width: 768px) {
+        /* Impact: flip order so image comes first (above text) */
+        #impact .detail-row.impact-row {
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          padding: var(--box-pad-y) 0;
+        }
+        #impact .detail-logo-zone {
+          width: 100%;
+          max-width: 100%;
+          aspect-ratio: 16 / 9;
+          align-self: stretch;
+          flex: none;
+        }
+        #impact .detail-logo-zone img {
+          border-radius: 0.6rem;
+        }
+        #impact .detail-logo-zone::after {
+          /* on mobile with image on top, fade bottom to black instead */
+          background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6) 100%);
+        }
+        #impact .detail-content {
+          width: 100%;
+        }
+        /* Stats band: 2 columns on mobile */
+        .stats-band {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .stats-band-sep { display: none !important; }
+        .stats-band-item {
+          border-right: 1px solid rgba(255,255,255,0.06);
+          border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .stats-band-item:nth-child(1),
+        .stats-band-item:nth-child(2) { border-top: none; }
+        .stats-band-item:nth-child(2n) { border-right: none; }
+      }
+
+      @media (max-width: 540px) {
+        #impact .detail-logo-zone {
+          aspect-ratio: 4 / 3;
+        }
+      }
 
       /* ─── Social rows ──────────────────────────────────────────── */
       .socials-flex {
-        display:flex; flex-direction:row; justify-content:space-evenly; align-items:center; gap:1.5rem;
+        display:flex; flex-direction:row; justify-content:space-evenly; align-items:center; gap:var(--box-header-mb);
       }
       .social-row {
         display:flex; align-items:center; justify-content:space-between;
-        padding:1.25rem 0; border-bottom:1px solid rgba(255,255,255,0.05);
+        padding:var(--content-gap) 0; 
         text-decoration:none; width:100%;
         transition:transform 280ms cubic-bezier(0.22,1,0.36,1), border-color 280ms ease;
       }
-      .social-row:hover { transform:translateX(6px); border-bottom-color:rgba(165,20,12,0.2); }
+      .social-row:hover { transform:translateX(6px);}
       .social-row:last-child { border-bottom:none; }
-      .social-row-left { display:flex; align-items:center; gap:1rem; }
+      .social-row-left { display:flex; align-items:center; gap:var(--content-gap); }
       .social-icon-wrap {
         display:flex; align-items:center; justify-content:center;
         width:3.5rem; height:3.5rem; border-radius:100%;
@@ -417,254 +506,25 @@
       .social-row:hover .social-icon-wrap svg { color:#A5140C; }
       .social-platform-name { font-size:clamp(0.95rem, 2vw, 1.2rem); font-weight:500; color:#fff; letter-spacing:0.02em; }
 
-      /* ─── Impact Cards ─────────────────────────────────────────── */
-      .impact-items { display: flex; flex-direction: column; gap: 0; }
-
-      .impact-card {
-        position: relative;
-        display: flex;
-        align-items: stretch;
-        min-height: 200px;
-        overflow: hidden;
-        border-radius: 1rem;
-        border: 1px solid rgba(255,255,255,0.06);
-        margin-bottom: 1.25rem;
-        background: rgba(255,255,255,0.015);
-        transition: border-color 350ms ease, box-shadow 350ms ease;
+      /* ─── Impact section — bare rows, no outer box ─────────────── */
+      #impact .impact-section-header {
+        margin-bottom: var(--box-header-mb);
       }
-      .impact-card:last-child { margin-bottom: 0; }
-      .impact-card:hover {
-        border-color: rgba(165,20,12,0.22);
-        box-shadow: 0 12px 50px rgba(0,0,0,0.55);
-      }
-
-      /* Text side */
-      .impact-text-side {
-        flex: 1 1 55%;
-        padding: 2rem 2rem 2rem 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-        z-index: 2;
-      }
-
-      .impact-eyebrow {
-        font-size: 0.85rem;
-        font-weight: 500;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        color: #989898;
-        margin: 0 0 0.5rem;
-      }
-
-      .impact-title {
-        margin: 0 0 0.85rem;
-        font-size: 1.1rem;
-        font-weight: 500;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: #fff;
-        line-height: 1.25;
-      }
-
-      .impact-desc {
-        letter-spacing: 0px;
-        text-transform: none;
-        margin-bottom: 0px;
-        font-size: 1.12rem;
-        font-weight: 500;
-        line-height: 1.5;
-        padding: 0px;
-      }
-
-      /* Image side with fade-to-black mask */
-      .impact-image-side {
-        flex: 0 0 42%;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .impact-image-side img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        transition: transform 600ms cubic-bezier(0.22,1,0.36,1), filter 400ms ease;
-        filter: brightness(0.75) saturate(0.85);
-      }
-
-      .impact-card:hover .impact-image-side img {
-        transform: scale(1.04);
-        filter: brightness(0.88) saturate(1);
-      }
-
-      /* Gradient mask: left edge fades to black, right stays visible */
-      .impact-image-side::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to right,
-          #000 0%,
-          rgba(0,0,0,0.82) 15%,
-          rgba(0,0,0,0.30) 45%,
-          rgba(0,0,0,0.05) 70%,
-          transparent 100%
-        );
-        pointer-events: none;
-        z-index: 1;
-      }
-
-      /* Subtle red accent on hover */
-      .impact-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 1px;
-        background: linear-gradient(to right, rgba(165,20,12,0.5), transparent 60%);
-      }
-
-      /* ─── Hero expanded content ────────────────────────────────── */
-      .hero-tagline {
-        opacity: 0;
-        margin: 0.6rem 0 0;
-        font-size: clamp(0.8rem, 2.8vw, 1.15rem);
-        font-weight: 300;
-        letter-spacing: 0.12em;
-        color: rgba(255,255,255,0.55);
-      }
-      body.hero-loaded .hero-tagline {
-        animation: heroFadeUp 700ms 420ms cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-
-      .hero-sectors {
-        opacity: 0;
-        margin: 1.1rem 0 0;
-        display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-        flex-wrap: wrap;
-      }
-      body.hero-loaded .hero-sectors {
-        animation: heroFadeUp 700ms 520ms cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-      .hero-sector-pill {
-        font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
-        color: rgba(255,255,255,0.45); padding: 0.3rem 0.85rem;
-        border: 1px solid rgba(255,255,255,0.10); border-radius: 999px;
-        background: rgba(255,255,255,0.03);
-      }
-      .hero-sector-sep { color: rgba(165,20,12,0.6); font-size: 0.65rem; }
-
-      .hero-audience {
-        opacity: 0;
-        margin: 2rem 0 0;
-        display: flex; align-items: center; justify-content: center;
-        gap: 0.5rem 1.5rem; flex-wrap: wrap;
-      }
-      body.hero-loaded .hero-audience {
-        animation: heroFadeUp 700ms 620ms cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-      .hero-aud-total {
-        font-size: clamp(1.3rem, 3.5vw, 2rem);
-        font-family: 'DM Serif Display', serif;
-        color: #fff; font-weight: 400;
-      }
-      .hero-aud-label {
-        font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-        color: #A5140C; font-weight: 500;
-      }
-      .hero-aud-breakdown {
-        display: flex; gap: 0.75rem 1.5rem; flex-wrap: wrap; justify-content: center;
-        margin-top: 0.5rem;
-      }
-      .hero-aud-item {
-        font-size: 0.78rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45);
-      }
-      .hero-aud-item strong { color: rgba(255,255,255,0.75); font-weight: 500; }
-
-      .hero-divider-thin {
-        width: 1px; height: 2.5rem;
-        background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
-        flex-shrink: 0;
-      }
-
-      .hero-stats {
-        opacity: 0;
-        margin: 2.2rem 0 0;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0;
-        width: 100%; max-width: 54rem;
-        border: 1px solid rgba(255,255,255,0.07); border-radius: 1rem;
-        background: rgba(0,0,0,0.35);
-        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-        overflow: hidden;
-      }
-      body.hero-loaded .hero-stats {
-        animation: heroFadeUp 700ms 720ms cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-      .hero-stat {
-        padding: 1.25rem 1rem;
-        border-right: 1px solid rgba(255,255,255,0.06);
-        position: relative;
-      }
-      .hero-stat:last-child { border-right: none; }
-      .hero-stat::before {
-        content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 1px;
-        background: linear-gradient(to right, rgba(165,20,12,0.4), transparent);
-      }
-      .hero-stat-num {
-        display: block;
-        font-family: 'DM Serif Display', serif;
-        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-        color: #fff; line-height: 1;
-        margin-bottom: 0.35rem;
-      }
-      .hero-stat-label {
-        display: block;
-        font-size: clamp(0.6rem, 1.2vw, 0.72rem);
-        letter-spacing: 0.18em; text-transform: uppercase;
-        color: rgba(255,255,255,0.42); font-weight: 500;
-      }
-
-      .hero-footer-tag {
-        opacity: 0;
-        margin: 1.6rem 0 0;
-        font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
-        color: rgba(255,255,255,0.28);
-      }
-      body.hero-loaded .hero-footer-tag {
-        animation: heroFadeUp 700ms 820ms cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-      .hero-footer-tag span { color: rgba(165,20,12,0.7); }
-
-      @media (max-width: 768px) {
-        .hero-stats { grid-template-columns: repeat(2, 1fr); max-width: 28rem; }
-        .hero-stat:nth-child(2) { border-right: none; }
-        .hero-stat:nth-child(1),
-        .hero-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
-      }
-      @media (max-width: 480px) {
-        .hero-stats { grid-template-columns: repeat(2, 1fr); }
-        .hero-aud-breakdown { gap: 0.4rem 0.9rem; }
-        .hero-divider-thin { display: none; }
+      #impact .impact-section-header .section-title {
+        margin: 0;
       }
 
       /* ─── About ecosystem cards ─────────────────────────────────── */
       .eco-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        margin-top: 1.75rem;
+        gap: var(--content-gap);
+        margin-top: var(--box-header-mb);
         border-top: 1px solid rgba(255,255,255,0.05);
-        padding-top: 1.75rem;
+        padding-top: var(--box-header-mb);
       }
       .eco-card {
-        padding: 1.25rem 1.1rem;
+        padding: var(--content-gap) var(--box-pad-x);
         border: 1px solid rgba(255,255,255,0.07);
         border-radius: 0.9rem;
         background: rgba(255,255,255,0.02);
@@ -701,29 +561,29 @@
       .about-kicker {
         font-size: 0.82rem; font-weight: 500; letter-spacing: 0.24em;
         text-transform: uppercase; color: #A5140C;
-        margin: 0 0 1rem; display: block;
+        margin: 0 0 var(--content-gap); display: block;
       }
       .about-headline {
         font-family: 'DM Serif Display', serif;
         font-size: clamp(1.2rem, 3vw, 1.6rem);
         color: #fff; line-height: 1.2;
-        margin: 0 0 1.25rem;
+        margin: 0 0 var(--box-header-mb);
       }
       .about-lead {
         font-size: clamp(0.95rem, 2vw, 1.1rem); line-height: 1.65;
-        color: rgba(235,235,235,0.78); margin: 0 0 0.9rem;
+        color: rgba(235,235,235,0.78); margin: 0 0 var(--content-gap);
       }
       .about-emphasis {
         font-size: clamp(0.95rem, 2vw, 1.05rem);
         color: rgba(255,255,255,0.55); font-style: italic;
-        margin: 1rem 0;
-        padding-left: 1rem;
+        margin: var(--content-gap) 0;
+        padding-left: var(--content-gap);
         border-left: 2px solid rgba(165,20,12,0.5);
       }
       .about-tagline {
         font-size: clamp(0.85rem, 1.8vw, 0.95rem);
         letter-spacing: 0.06em; color: rgba(255,255,255,0.4);
-        margin: 0.25rem 0 0;
+        margin: calc(var(--content-gap) * 0.25) 0 0;
       }
 
       /* ─── Stats band (standalone section below hero) ───────────── */
@@ -744,9 +604,9 @@
         background: linear-gradient(to right, transparent, rgba(165,20,12,0.35), transparent);
       }
       .stats-band-item {
-        padding: 1.75rem 1.25rem;
+        padding: var(--box-pad-y) var(--box-pad-x);
         display: flex; flex-direction: column; align-items: center; text-align: center;
-        gap: 0.35rem;
+        gap: calc(var(--content-gap) * 0.35);
       }
       .stats-band-num {
         font-family: 'DM Serif Display', serif;
@@ -791,18 +651,18 @@
       }
       @media (max-width: 480px) {
         .stats-band { grid-template-columns: 1fr 1fr; }
-        .stats-band-item { padding: 1.25rem 0.75rem; }
+        .stats-band-item { padding: var(--box-pad-y) var(--box-pad-x); }
       }
 
       /* ─── Footer ───────────────────────────────────────────────── */
       .site-footer {
         width:100%; background:#000; border-top:1px solid rgba(255,255,255,0.05);
-        padding:1.75rem var(--page-x); margin-top:80px;
+        padding:var(--box-pad-y) var(--page-x); margin-top:var(--section-y);
       }
       .site-footer-inner {
         max-width:var(--content-max); margin:0 auto;
         display:flex; align-items:center; justify-content:space-between;
-        flex-wrap:wrap; gap:0.75rem;
+        flex-wrap:wrap; gap:var(--content-gap);
       }
 
       /* ═══════════════════════════════════════════════════════════════
@@ -811,7 +671,7 @@
 
       /* ── ≤1100px: Tighten arc, hide portrait ── */
       @media (max-width: 1100px) {
-        :root { --page-x: 2.5rem; --box-pad-x: 2rem; }
+        :root { --page-x: 1.75rem; --box-pad-x: 2rem; }
         .arc-card:nth-child(1) { transform: rotate(-14deg) translateX(-320px); }
         .arc-card:nth-child(2) { transform: rotate(-8deg)  translateX(-212px); }
         .arc-card:nth-child(3) { transform: rotate(-2deg)  translateX(-106px); }
@@ -831,13 +691,14 @@
       /* ── ≤768px: Tablet ── */
       @media (max-width: 768px) {
         :root {
-          --page-x: 1.5rem;
+          --page-x: 1rem;
           --section-y: 4rem;
           --divider-y: 2rem;
           --box-pad-y: 2rem;
           --box-pad-x: 1.5rem;
           --box-header-mb: 1.75rem;
           --detail-row-mb: 1.25rem;
+          --content-gap: 0.9rem;
         }
  
         /* Nav: hamburger mode */
@@ -861,7 +722,7 @@
         /* Detail rows: stacked */
         .detail-row {
           flex-direction: column; align-items: flex-start;
-          min-height: unset; padding: 1.5rem; gap: 0.75rem;
+          min-height: unset; padding: var(--box-pad-y) var(--box-pad-x); gap: var(--content-gap);
         }
         .detail-logo-zone {
           flex: none; width: 70px; height: 54px;
@@ -870,49 +731,26 @@
         .detail-divider { display: none; }
         .detail-content { width: 100%; }
         .venture-title { padding: 0; font-size: 0.8rem; }
-        .detail-copy { padding: 0.4rem 0 0 0; }
+        .detail-copy { padding: var(--content-gap) 0 0 0; }
 
         /* Socials: vertical stack */
         .socials-flex { flex-direction: column !important; gap: 0 !important; }
         .social-icon-wrap { width: 3rem; height: 3rem; }
 
-        /* Impact cards: stack image below text on mobile */
-        .impact-card {
-          flex-direction: column;
-          min-height: unset;
-        }
-        .impact-text-side {
-          flex: none;
-          padding: 1.5rem 1.25rem 1rem;
-        }
-        .impact-image-side {
-          flex: none;
-          height: 180px;
-          width: 100%;
-        }
-        .impact-image-side::after {
-          background: linear-gradient(
-            to bottom,
-            #000 0%,
-            rgba(0,0,0,0.5) 20%,
-            rgba(0,0,0,0.05) 55%,
-            transparent 100%
-          );
-        }
-
         /* Footer */
-        .site-footer-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
-        .site-footer { margin-top: 3rem; }
+        .site-footer-inner { flex-direction: column; align-items: flex-start; gap: var(--content-gap); }
+        .site-footer { margin-top: var(--section-y); }
       }
 
       /* ── ≤540px: Large phone ── */
       @media (max-width: 540px) {
         :root {
-          --page-x: 1.1rem;
+          --page-x: 0.75rem;
           --section-y: 3rem;
           --box-pad-y: 1.5rem;
           --box-pad-x: 1.1rem;
           --box-header-mb: 1.25rem;
+          --content-gap: 0.85rem;
         }
 
         /* Companies: 2-col */
@@ -920,7 +758,7 @@
 
         /* Box radius tighter */
         .box { border-radius: 1.1rem; }
-        .detail-row { border-radius: 1rem; padding: 1.1rem; gap: 0.6rem; }
+        .detail-row { border-radius: 1rem; padding: var(--box-pad-y) var(--box-pad-x); gap: var(--content-gap); }
 
         /* Logo zone smaller */
         .detail-logo-zone { width: 56px; height: 44px; }
@@ -934,35 +772,152 @@
         .social-icon-wrap { width: 2.6rem; height: 2.6rem; }
 
         /* Section companies margin */
-        .section-companies { padding-bottom: 3rem; }
-        #companies { margin-bottom: 20px !important; }
-
-        .impact-image-side { height: 140px; }
-        .impact-text-side { padding: 1.25rem 1rem 0.75rem; }
+        .section-companies { padding-bottom: var(--section-y); }
+        #companies { margin-bottom: var(--section-y) !important; }
       }
 
       /* ── ≤380px: Very small phone ── */
       @media (max-width: 380px) {
-        :root { --page-x: 0.9rem; --box-pad-x: 0.9rem; }
+        :root { --page-x: 0.6rem; --box-pad-x: 0.9rem; }
         .arc-card { width: calc(50% - 0.4rem); height: 110px; }
         .arc-card img { width: 70%; }
         .box { border-radius: 0.9rem; }
-        .detail-row { padding: 0.9rem; }
+        .detail-row { padding: var(--box-pad-y) var(--box-pad-x); }
         .nav-inner { padding: 0.65rem 1rem; }
       }
 
       /* ── ≥1440px: Wide desktop — show portrait ── */
       @media (min-width: 1440px) {
-        :root { --page-x: 5rem; }
+        :root { --page-x: 3rem; }
         .sc-portrait-col { display: flex; }
         .sc-portrait-col img { height: 72%; }
         #site-nav.nav-solid { border-bottom: 1px solid rgba(255,255,255,0.06); }
       }
 
       @media (min-width: 2000px) {
-        :root { --page-x: 5rem; }
+        :root { --page-x: 3rem; }
         .sc-portrait-col { display: flex; }
         .sc-portrait-col img { height: 95%; }
+      }
+
+       /* ─── Hero expanded content ────────────────────────────────── */
+       .hero-tagline {
+        opacity: 0;
+        margin: 0.6rem 0 0;
+        font-size: clamp(0.8rem, 2.8vw, 1.15rem);
+        font-weight: 300;
+        letter-spacing: 0.12em;
+        color: rgba(255,255,255,0.55);
+      }
+      body.hero-loaded .hero-tagline {
+        animation: heroFadeUp 700ms 420ms cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .hero-sectors {
+        opacity: 0;
+        margin: 1.1rem 0 0;
+        display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+        flex-wrap: wrap;
+      }
+      body.hero-loaded .hero-sectors {
+        animation: heroFadeUp 700ms 520ms cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .hero-sector-pill {
+        font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+        color: rgba(255,255,255,0.45); padding: 0.3rem 0.85rem;
+        border: 1px solid rgba(255,255,255,0.10); border-radius: 999px;
+        background: rgba(255,255,255,0.03);
+      }
+      .hero-sector-sep { color: rgba(165,20,12,0.6); font-size: 0.65rem; }
+      .hero-audience {
+        opacity: 0;
+        margin: 2rem 0 0;
+        display: flex; align-items: center; justify-content: center;
+        gap: 0.5rem 1.5rem; flex-wrap: wrap;
+      }
+      body.hero-loaded .hero-audience {
+        animation: heroFadeUp 700ms 620ms cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .hero-aud-total {
+        font-size: clamp(1.3rem, 3.5vw, 2rem);
+        font-family: 'DM Serif Display', serif;
+        color: #fff; font-weight: 400;
+      }
+      .hero-aud-label {
+        font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+        color: #A5140C; font-weight: 500;
+      }
+      .hero-aud-breakdown {
+        display: flex; gap: 0.75rem 1.5rem; flex-wrap: wrap; justify-content: center;
+        margin-top: 0.5rem;
+      }
+      .hero-aud-item {
+        font-size: 0.78rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45);
+      }
+      .hero-aud-item strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+      .hero-divider-thin {
+        width: 1px; height: 2.5rem;
+        background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+        flex-shrink: 0;
+      }
+      .hero-stats {
+        opacity: 0;
+        margin: 2.2rem 0 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        width: 100%; max-width: 54rem;
+        border: 1px solid rgba(255,255,255,0.07); border-radius: 1rem;
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        overflow: hidden;
+      }
+      body.hero-loaded .hero-stats {
+        animation: heroFadeUp 700ms 720ms cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .hero-stat {
+        padding: 1.25rem 1rem;
+        border-right: 1px solid rgba(255,255,255,0.06);
+        position: relative;
+      }
+      .hero-stat:last-child { border-right: none; }
+      .hero-stat::before {
+        content: '';
+        position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(to right, rgba(165,20,12,0.4), transparent);
+      }
+      .hero-stat-num {
+        display: block;
+        font-family: 'DM Serif Display', serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        color: #fff; line-height: 1;
+        margin-bottom: 0.35rem;
+      }
+      .hero-stat-label {
+        display: block;
+        font-size: clamp(0.6rem, 1.2vw, 0.72rem);
+        letter-spacing: 0.18em; text-transform: uppercase;
+        color: rgba(255,255,255,0.42); font-weight: 500;
+      }
+      .hero-footer-tag {
+        opacity: 0;
+        margin: 1.6rem 0 0;
+        font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
+        color: rgba(255,255,255,0.28);
+      }
+      body.hero-loaded .hero-footer-tag {
+        animation: heroFadeUp 700ms 820ms cubic-bezier(0.22,1,0.36,1) forwards;
+      }
+      .hero-footer-tag span { color: rgba(165,20,12,0.7); }
+      @media (max-width: 768px) {
+        .hero-stats { grid-template-columns: repeat(2, 1fr); max-width: 28rem; }
+        .hero-stat:nth-child(2) { border-right: none; }
+        .hero-stat:nth-child(1),
+        .hero-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+      }
+      @media (max-width: 480px) {
+        .hero-stats { grid-template-columns: repeat(2, 1fr); }
+        .hero-aud-breakdown { gap: 0.4rem 0.9rem; }
+        .hero-divider-thin { display: none; }
       }
     </style>
   </head>
@@ -1008,10 +963,10 @@
           <h1 style="font-family:'DM Serif Display',serif; margin:0;">
             <span class="hero-name" id="heroName">
               <!-- Base layer (your current gradient) -->
-              <span class="hero-name-base name-grad">FAHAD RIAZ</span>
+              <span class="hero-name-base name-grad"> </span>
           
               <!-- Contrast layer revealed under cursor -->
-              <span class="hero-name-contrast">FAHAD RIAZ</span>
+              <span class="hero-name-contrast"> </span>
             </span>
           </h1>
           
@@ -1036,7 +991,7 @@
 
       <!-- ══════════ STATS BAND ══════════ -->
       <section class="page-section reveal" style="padding-top:0; padding-bottom:var(--section-y);">
-        <div class="inner">
+        <div class="inner" style="margin-top: var(--section-y)">
           <div style="width:100%; max-width:var(--content-max); display:flex; flex-direction:column; align-items:center; gap:1.5rem;">
 
             <div class="stats-band">
@@ -1074,40 +1029,43 @@
         </div>
       </section>
 
-      <!-- ══════════ ABOUT ══════════ -->
-      <section id="about" class="page-section reveal">
-        <div class="inner">
-          <div class="box">
-            <div class="box-header">
-              <p class="section-title">ABOUT</p>
-              <p class="section-sub">Scaling through disciplined execution.</p>
-            </div>
-            <div class="box-body">
-              <p class="about-lead">My father began importing cars in the 1980s. In 1995, our family established operations in Dubai with one clear vision — build something that lasts.</p>
-              <p class="about-lead">Today, Milele Motors stocks over 4,000 vehicles across Dubai and Antwerp, exporting nearly 10,000 cars annually to more than 50 countries.</p>
-              <p class="about-lead" style="margin-bottom:0.4rem;">But scale is only the beginning.</p>
-              <p class="about-emphasis">From automotive exports to car rental operations and now real estate development, my focus is simple: Build systems. Create leverage. Expand across continents.</p>
-              <p class="about-lead">Fahad Riaz is a Dubai-based entrepreneur recognized for driving record-breaking sales and market presence across Milele's multi-vertical ecosystem. His edge isn't hype — it's turning complex challenges into structured systems that scale, backed by disciplined growth and long-term value creation across international markets including Africa, Asia, and the Middle East.</p>
-            </div>
+      <!-- ══════════ ABOUT + VENTURES (with portrait) ══════════ -->
+      <div class="socials-contact-wrapper">
+        <div class="sc-portrait-col" id="sc-portrait-about">
+          <img src="./Public/fahad.webp" alt="Fahad Riaz" loading="lazy" />
+        </div>
+        <div class="socials-contact-inner">
+          <div class="sc-boxes-col">
+            <section id="about" class="sc-section reveal">
+              <div class="box">
+                <div class="box-header">
+                  <p class="section-title">ABOUT</p>
+                  <p class="section-sub">Scaling through disciplined execution.</p>
+                </div>
+                <div class="box-body">
+                  <p class="about-lead">My father began importing cars in the 1980s. In 1995, our family established operations in Dubai with one clear vision — build something that lasts.</p>
+                  <p class="about-lead">Today, Milele Motors stocks over 4,000 vehicles across Dubai and Antwerp, exporting nearly 10,000 cars annually to more than 50 countries.</p>
+                  <p class="about-lead" style="margin-bottom:calc(var(--content-gap) * 0.4);">But scale is only the beginning.</p>
+                  <p class="about-emphasis">From automotive exports to car rental operations and now real estate development, my focus is simple: Build systems. Create leverage. Expand across continents.</p>
+                  <p class="about-lead">Fahad Riaz is a Dubai-based entrepreneur recognized for driving record-breaking sales and market presence across Milele's multi-vertical ecosystem. His edge isn't hype — it's turning complex challenges into structured systems that scale, backed by disciplined growth and long-term value creation across international markets including Africa, Asia, and the Middle East.</p>
+                </div>
+              </div>
+            </section>
+            <section id="ventures" class="sc-section reveal">
+              <div class="box">
+                <div class="box-header">
+                  <p class="section-title">VENTURES</p>
+                  <p class="section-sub">Building businesses that feel effortless.</p>
+                </div>
+                <div class="box-body">
+                  <p>Milele operates as an integrated ecosystem tackling complex challenges with clarity and speed. From tax-free vehicle export and procurement to car rental, luxury real estate, gourmet experiences, and customer service technology — each vertical strengthens the next.</p>
+                  <p>The mission: craft experiences so smooth and seamless they feel almost magical. The vision: build an enduring global organization reshaping industries, making everyday life simpler and faster, leaving a mark the world will never forget.</p>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-      </section>
-
-      <!-- ══════════ VENTURES ══════════ -->
-      <section id="ventures" class="page-section reveal">
-        <div class="inner">
-          <div class="box">
-            <div class="box-header">
-              <p class="section-title">VENTURES</p>
-              <p class="section-sub">Building businesses that feel effortless.</p>
-            </div>
-            <div class="box-body">
-              <p>Milele operates as an integrated ecosystem tackling complex challenges with clarity and speed. From tax-free vehicle export and procurement to car rental, luxury real estate, gourmet experiences, and customer service technology — each vertical strengthens the next.</p>
-              <p>The mission: craft experiences so smooth and seamless they feel almost magical. The vision: build an enduring global organization reshaping industries, making everyday life simpler and faster, leaving a mark the world will never forget.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       <!-- ══════════ SKY DIVIDER ══════════ -->
       <section id="sky-section" class="page-section section-divider">
@@ -1197,10 +1155,6 @@
 
       <!-- ══════════ SOCIALS + IMPACT ══════════ -->
       <div class="socials-contact-wrapper">
-        <div class="sc-portrait-col" id="sc-portrait">
-          <img src="./Public/fahad.webp" alt="Fahad Riaz" loading="lazy" />
-        </div>
-
         <div class="socials-contact-inner" id="sc-combined">
           <div class="sc-boxes-col">
 
@@ -1258,69 +1212,51 @@
               </div>
             </div>
 
-            <!-- IMPACT -->
+            <!-- IMPACT — one outer box, plain items inside -->
             <div class="sc-section reveal" id="impact" style="padding-bottom:0;">
               <div class="box">
                 <div class="box-header">
                   <p class="section-title">IMPACT</p>
                 </div>
-                <div class="box-body" style="border-top:1px solid rgba(255,255,255,0.05); padding-top:2rem;">
+                <div class="box-body" style="padding-top:0; border-top:none; display:flex; flex-direction:column;">
 
-                  <div class="impact-items">
-
-                    <!-- Card 1: Mosque -->
-                    <div class="impact-card">
-                      <div class="impact-text-side">
-                        <p class="impact-title">Mosque Construction – Pakistan</p>
-                        <p class="impact-desc">As part of a long-term commitment to community development, Fahad funded and oversaw the construction of a rural mosque in Pakistan — creating a permanent space for worship, education, and social unity. Designed to serve generations, the mosque stands not only as a place of prayer, but as a center for learning, gathering, and strengthening community bonds.</p>
-                      </div>
-                      <div class="impact-image-side">
-                        <img
-                          src="./Public/impact/mosque.webp"
-                          alt="Mosque Construction in Pakistan"
-                          loading="lazy"
-                          onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(165,20,12,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';"
-                        />
-                      </div>
+                  <div class="detail-row impact-row" style="padding:  0 var(--box-pad-x) var(--box-pad-y) var(--box-pad-x);">
+                    <div class="detail-content">
+                      <span class="venture-title">Mosque Construction – Pakistan</span>
+                      <p class="detail-copy">As part of a long-term commitment to community development, Fahad funded and oversaw the construction of a rural mosque in Pakistan — creating a permanent space for worship, education, and social unity. Designed to serve generations, the mosque stands not only as a place of prayer, but as a center for learning, gathering, and strengthening community bonds.</p>
                     </div>
-
-                    <!-- Card 2: Water -->
-                    <div class="impact-card">
-                      <div class="impact-text-side">
-                        <p class="impact-title">Water Wells – Sub-Saharan Africa</p>
-                        <p class="impact-desc">Recognizing that access to clean water is foundational to health, dignity, and economic stability, Fahad has supported the installation of sustainable water wells in underserved communities across Sub-Saharan Africa. These initiatives focus on long-term infrastructure rather than temporary relief — ensuring reliable access to safe drinking water for families and future generations.</p>
-                      </div>
-                      <div class="impact-image-side">
-                        <img
-                          src="./Public/impact/water-well.webp"
-                          alt="Clean Water Wells in Sub-Saharan Africa"
-                          loading="lazy"
-                          onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(20,80,165,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';"
-                        />
-                      </div>
+                    <div class="detail-logo-zone">
+                      <img src="./Public/impact/mosque.webp" alt="Mosque Construction in Pakistan" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(165,20,12,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';" />
                     </div>
+                  </div>
 
-                    <!-- Card 3: Education -->
-                    <div class="impact-card">
-                      <div class="impact-text-side">
-                        <p class="impact-title">Scholarships &amp; Learning Initiatives</p>
-                        <p class="impact-desc">Investing in people is investing in the future. Through targeted scholarships and educational support initiatives, Fahad contributes to expanding access to learning opportunities for underprivileged students. The focus extends beyond academic support — encouraging leadership, technical capability, and entrepreneurial thinking among the next generation.</p>
-                      </div>
-                      <div class="impact-image-side">
-                        <img
-                          src="./Public/impact/education.webp"
-                          alt="Education and Youth Development"
-                          loading="lazy"
-                          onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(20,120,80,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';"
-                        />
-                      </div>
+                  <div class="impact-item-divider" ></div>
+
+                  <div class="detail-row impact-row" style="padding: 0 var(--box-pad-x) var(--box-pad-y) var(--box-pad-x);">
+                    <div class="detail-content">
+                      <span class="venture-title">Water Wells – Sub-Saharan Africa</span>
+                      <p class="detail-copy">Recognizing that access to clean water is foundational to health, dignity, and economic stability, Fahad has supported the installation of sustainable water wells in underserved communities across Sub-Saharan Africa. These initiatives focus on long-term infrastructure rather than temporary relief — ensuring reliable access to safe drinking water for families and future generations.</p>
                     </div>
+                    <div class="detail-logo-zone">
+                      <img src="./Public/impact/water-well.webp" alt="Clean Water Wells in Sub-Saharan Africa" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(20,80,165,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';" />
+                    </div>
+                  </div>
 
-                  </div><!-- /.impact-items -->
+                  <div class="impact-item-divider"></div>
+
+                  <div class="detail-row impact-row" style="padding:0 var(--box-pad-x);">
+                    <div class="detail-content">
+                      <span class="venture-title">Scholarships &amp; Learning Initiatives</span>
+                      <p class="detail-copy">Investing in people is investing in the future. Through targeted scholarships and educational support initiatives, Fahad contributes to expanding access to learning opportunities for underprivileged students. The focus extends beyond academic support — encouraging leadership, technical capability, and entrepreneurial thinking among the next generation.</p>
+                    </div>
+                    <div class="detail-logo-zone">
+                      <img src="./Public/impact/education.webp" alt="Education and Youth Development" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(20,120,80,0.15) 0%, rgba(0,0,0,0.8) 100%)'; this.style.display='none';" />
+                    </div>
+                  </div>
 
                 </div>
               </div>
-            </div>
+            </div><!-- /#impact -->
 
           </div><!-- /.sc-boxes-col -->
         </div><!-- /.socials-contact-inner -->
