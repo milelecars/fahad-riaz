@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://fahadriaz.com/sitemap.xml
+
+# Block admin/private areas if any
+Disallow: /admin/
+Disallow: /private/

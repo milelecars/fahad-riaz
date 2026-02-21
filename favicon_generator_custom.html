@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FR Favicon Generator - DM Serif Display</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #1a1a1a;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      color: #A5140C;
+      margin: 0;
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .preview-item {
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .preview-canvas {
+      background: #000;
+      border-radius: 8px;
+      border: 2px solid #A5140C;
+    }
+    .preview-label {
+      font-size: 14px;
+      color: #999;
+      text-align: center;
+    }
+    .download-btn {
+      background: #A5140C;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .download-btn:hover {
+      background: #8a1009;
+    }
+    .download-all {
+      background: #A5140C;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.2s;
+      margin-top: 20px;
+    }
+    .download-all:hover {
+      background: #8a1009;
+    }
+    .status {
+      color: #4ade80;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>FR Favicons - DM Serif Display</h1>
+  <p style="color: #999; margin: -20px 0 0;">Red (#A5140C) on Black • 10% Overlap</p>
+  
+  <div class="preview-grid" id="previewGrid"></div>
+  
+  <button class="download-all" onclick="downloadAll()">Download All Favicons</button>
+  <div class="status" id="status"></div>
+
+  <script>
+    const sizes = [
+      { size: 16, name: 'favicon-16x16.png', label: 'Favicon 16×16' },
+      { size: 32, name: 'favicon-32x32.png', label: 'Favicon 32×32' },
+      { size: 180, name: 'apple-touch-icon.png', label: 'Apple Touch Icon 180×180' },
+      { size: 192, name: 'android-chrome-192x192.png', label: 'Android Chrome 192×192' },
+      { size: 512, name: 'android-chrome-512x512.png', label: 'Android Chrome 512×512' }
+    ];
+
+    const canvases = {};
+
+    function generateFavicon(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      // Black background
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, size, size);
+
+      // Font setup - DM Serif Display with proper sizing
+      const fontSize = Math.floor(size * 0.68); // Slightly larger for better appearance
+      ctx.font = `${fontSize}px "DM Serif Display", serif`;
+      ctx.fillStyle = '#A5140C';
+      ctx.textBaseline = 'middle';
+
+      // Measure text for precise positioning
+      const fMetrics = ctx.measureText('F');
+      const rMetrics = ctx.measureText('R');
+      
+      // Calculate positions with 10% overlap
+      const fWidth = fMetrics.width;
+      const rWidth = rMetrics.width;
+      const overlap = fWidth * 0.10;
+      const totalWidth = fWidth + rWidth - overlap;
+      
+      // Center the combined letters
+      const startX = (size - totalWidth) / 2;
+      const centerY = size / 2;
+
+      // Draw 'F'
+      ctx.fillText('F', startX, centerY);
+
+      // Draw 'R' with overlap
+      ctx.fillText('R', startX + fWidth - overlap, centerY);
+
+      return canvas;
+    }
+
+    function createPreview(config) {
+      const item = document.createElement('div');
+      item.className = 'preview-item';
+
+      const canvas = generateFavicon(config.size);
+      canvas.className = 'preview-canvas';
+      
+      // Scale smaller ones up for preview
+      const displaySize = Math.max(config.size, 100);
+      canvas.style.width = displaySize + 'px';
+      canvas.style.height = displaySize + 'px';
+      canvas.style.imageRendering = config.size < 100 ? 'pixelated' : 'auto';
+
+      canvases[config.name] = canvas;
+
+      const label = document.createElement('div');
+      label.className = 'preview-label';
+      label.textContent = config.label;
+
+      const btn = document.createElement('button');
+      btn.className = 'download-btn';
+      btn.textContent = 'Download';
+      btn.onclick = () => downloadCanvas(canvas, config.name);
+
+      item.appendChild(canvas);
+      item.appendChild(label);
+      item.appendChild(btn);
+
+      return item;
+    }
+
+    function downloadCanvas(canvas, filename) {
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png', 1.0);
+    }
+
+    async function downloadAll() {
+      const status = document.getElementById('status');
+      status.textContent = 'Generating downloads...';
+      
+      for (const config of sizes) {
+        const canvas = canvases[config.name];
+        downloadCanvas(canvas, config.name);
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+      
+      status.textContent = '✓ All favicons downloaded!';
+      setTimeout(() => status.textContent = '', 3000);
+    }
+
+    // Wait for font to load, then generate previews
+    document.fonts.ready.then(() => {
+      setTimeout(() => {
+        const grid = document.getElementById('previewGrid');
+        sizes.forEach(config => {
+          grid.appendChild(createPreview(config));
+        });
+      }, 100);
+    });
+  </script>
+</body>
+</html>
