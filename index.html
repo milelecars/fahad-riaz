@@ -14,15 +14,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fahad Riaz | Dubai Business Leader | Milele Automotive & Multi-Vertical Entrepreneur</title>
-    <meta name="description" content="Fahad Riaz - Dubai-based entrepreneur scaling Milele across automotive export, car rental, real estate, gourmet, and technology. Driving operational excellence and strategic growth in UAE and international markets." />
+    <meta name="description" content="Fahad Riaz — Dubai entrepreneur and CEO of Milele. Exporting 10,000+ cars annually to 50+ countries, 6.2M+ global audience. Ventures: Milele Motors, Car Rental, Real Estate, Gourmet. Based in Dubai, UAE." />
     <meta name="keywords" content="Fahad Riaz, Milele Motors, Dubai entrepreneur, business leader UAE, Milele car rental, Milele developments, automotive export Dubai, UAE business operations, Milele properties, luxury car export" />
     <meta name="author" content="Fahad Riaz" />
-    <link rel="canonical" href="https://fahadriaz.com" />
+    <link rel="canonical" href="https://fahadriaz.com/" />
+    <link rel="alternate" hreflang="en" href="https://fahadriaz.com/" />
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content="Fahad Riaz | Dubai Business Leader & Multi-Vertical Entrepreneur" />
     <meta property="og:description" content="Scaling businesses across automotive, real estate, and technology with operational excellence and disciplined execution." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://fahadriaz.com" />
+    <meta property="og:site_name" content="Fahad Riaz" />
+    <meta property="og:image" content="https://fahadriaz.com/Public/fahad1.webp" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,27 +51,63 @@
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://fahadriaz.com/#person",
       "name": "Fahad Riaz",
-      "jobTitle": "Entrepreneur & Business Leader",
-      "description": "Dubai-based entrepreneur scaling Milele across automotive export, car rental, real estate, gourmet, and technology.",
+      "alternateName": [
+        "Fahad Riaz Official",
+        "Fahad Riaz Dubai",
+        "fahadriazzz"
+      ],
+      "jobTitle": "Entrepreneur & CEO",
+      "description": "Fahad Riaz is a Dubai-based entrepreneur and the driving force behind Milele, a multi-vertical business ecosystem spanning automotive export, car rental, luxury real estate, gourmet, and technology. With over 10,000 cars exported annually to 50+ countries and a global social media audience exceeding 6.2 million, Fahad is one of Dubai's most prominent business leaders.",
       "url": "https://fahadriaz.com",
       "sameAs": [
         "https://www.instagram.com/fahadriazzz/",
         "https://www.tiktok.com/@fahadriazzz",
         "https://www.youtube.com/@fahadriazz",
-        "https://www.facebook.com/fahadriazzzz/"
+        "https://www.facebook.com/fahadriazzzz/",
+        "https://fahad-riaz.com",
+        "https://fahadriazofficial.com"
       ],
-      "image": "https://fahadriaz.com/Public/fahad1.webp",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://fahadriaz.com/Public/fahad1.webp",
+        "width": 1200,
+        "height": 800
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Dubai",
+        "addressRegion": "Dubai",
         "addressCountry": "AE"
       },
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Milele",
-        "url": "https://www.milele.com"
-      }
+      "worksFor": [
+        {
+          "@type": "Organization",
+          "name": "Milele Motors",
+          "url": "https://www.milele.com",
+          "description": "Tax-free automotive export serving Africa, Asia and the Middle East"
+        },
+        {
+          "@type": "Organization",
+          "name": "Milele Car Rental",
+          "url": "https://www.milelecarrental.com"
+        },
+        {
+          "@type": "Organization",
+          "name": "Milele Properties",
+          "url": "https://mileleproperty.com"
+        }
+      ],
+      "knowsAbout": [
+        "Automotive Export",
+        "Car Rental",
+        "Real Estate Development",
+        "Business Operations",
+        "UAE Entrepreneurship",
+        "African Markets",
+        "Dubai Business"
+      ]
     }
     </script>
 
@@ -217,6 +256,7 @@
       .hero-name-base{
         position: relative;
         display: inline-block;
+        visibility: hidden;
       }
 
       /* Top layer: shown only inside a circular mask that follows cursor */
@@ -224,6 +264,7 @@
         position: absolute;
         inset: 0;
         display: inline-block;
+        visibility: hidden;
 
         /* "Contrast" look: you can tune this */
         color: #fff;
@@ -1129,10 +1170,10 @@
           <h1 style="font-family:'DM Serif Display',serif; margin:0;">
             <span class="hero-name" id="heroName">
               <!-- Base layer (your current gradient) -->
-              <span class="hero-name-base name-grad"> </span>
+              <span class="hero-name-base name-grad">Fahad Riaz</span>
           
               <!-- Contrast layer revealed under cursor -->
-              <span class="hero-name-contrast"> </span>
+              <span class="hero-name-contrast" aria-hidden="true">Fahad Riaz</span>
             </span>
           </h1>
           
@@ -1205,7 +1246,7 @@
             <section id="about" class="sc-section reveal">
               <div class="box">
                 <div class="box-header">
-                  <p class="section-title">ABOUT</p>
+                  <p class="section-title" id="about-heading">About Fahad Riaz</p>
                 </div>
                 <div class="box-body">
                   <p class="about-lead">My father began importing cars in the 1980s. In 1995, our family established operations in Dubai with one clear vision — build something that lasts.</p>
@@ -1219,7 +1260,7 @@
             <section id="ventures" class="sc-section reveal">
               <div class="box">
                 <div class="box-header">
-                  <p class="section-title">VENTURES</p>
+                  <p class="section-title" id="ventures-heading">Ventures &amp; Businesses</p>
                 </div>
                 <div class="box-body">
                   <p>Milele operates as an integrated ecosystem tackling complex challenges with clarity and speed. From tax-free vehicle export and procurement to car rental, luxury real estate, gourmet experiences, and customer service technology — each vertical strengthens the next.</p>
@@ -1326,7 +1367,7 @@
             <div class="sc-section reveal" id="socials">
               <div class="box">
                 <div class="box-header">
-                  <p class="section-title">SOCIALS</p>
+                  <p class="section-title" id="socials-heading">Social Media</p>
                 </div>
                 <div class="socials-flex">
                   <a href="https://www.instagram.com/fahadriazzz/?hl=en" target="_blank" rel="noopener noreferrer" class="social-row" aria-label="Instagram">
@@ -1380,7 +1421,7 @@
             <div class="sc-section reveal" id="impact" style="padding-bottom:0;">
               <div class="box">
                 <div class="box-header">
-                  <p class="section-title">IMPACT</p>
+                  <p class="section-title" id="impact-heading">Philanthropy &amp; Impact</p>
                 </div>
                 <div class="box-body" style="padding-top:0; border-top:none; display:flex; flex-direction:column;">
 
@@ -1535,6 +1576,101 @@
       const heroImg = new Image();
       heroImg.src = "./Public/fahad1.webp";
       heroImg.onload = () => document.getElementById('hero').classList.remove('hero-fallback');
+    </script>
+    <!-- WebSite structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://fahadriaz.com/#website",
+      "url": "https://fahadriaz.com",
+      "name": "Fahad Riaz",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://fahadriaz.com/#person"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://fahadriaz.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- SiteNavigationElement — helps Google show sitelinks in search results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Fahad Riaz Site Navigation",
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "About Fahad Riaz",
+          "description": "Dubai-based entrepreneur and founder of Milele. Learn about Fahad's background, vision, and business journey.",
+          "url": "https://fahadriaz.com/#about"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "Ventures & Businesses",
+          "description": "Milele Motors, Milele Car Rental, Milele Real Estate, Milele Luxury, Milele Gourmet, and Milele Properties.",
+          "url": "https://fahadriaz.com/#ventures"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "Social Media",
+          "description": "Follow Fahad Riaz on Instagram, TikTok, YouTube, and Facebook. 6.2M+ global audience.",
+          "url": "https://fahadriaz.com/#socials"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "Impact & Philanthropy",
+          "description": "Fahad Riaz's charitable initiatives: mosque construction in Pakistan, water wells in Africa, and education scholarships.",
+          "url": "https://fahadriaz.com/#impact"
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList for structured navigation -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Fahad Riaz",
+          "item": "https://fahadriaz.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About",
+          "item": "https://fahadriaz.com/#about"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ventures",
+          "item": "https://fahadriaz.com/#ventures"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Impact",
+          "item": "https://fahadriaz.com/#impact"
+        }
+      ]
+    }
     </script>
   </body>
 </html>
