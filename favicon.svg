@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16244f"/>
+      <stop offset="100%" stop-color="#05070f"/>
+    </linearGradient>
+    <linearGradient id="fr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9cc0ff"/>
+      <stop offset="100%" stop-color="#3f7bff"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="16" fill="url(#bg)" stroke="#5f93ff" stroke-opacity="0.55" stroke-width="1.5"/>
+  <text x="32" y="41" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="27" letter-spacing="0.5" fill="url(#fr)">FR</text>
+</svg>

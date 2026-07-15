@@ -32,6 +32,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
 
     <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -58,7 +59,7 @@
         "fahadriazzz"
       ],
       "jobTitle": "Entrepreneur & CEO",
-      "description": "Fahad Riaz is a Dubai-based entrepreneur and the driving force behind Milele, a multi-vertical business ecosystem spanning automotive export, car rental, luxury real estate and fintech. With over 10,000 cars exported annually to 50+ countries and a global social media audience exceeding 6.2 million, Fahad is one of Dubai's most prominent business leaders.",
+      "description": "Fahad Riaz is a Dubai-based entrepreneur and the driving force behind Milele's multi-vertical ventures, spanning automotive export, car rental, luxury real estate and fintech. With over 10,000 cars exported annually to 50+ countries and a global social media audience exceeding 6.2 million, Fahad is one of Dubai's most prominent business leaders.",
       "url": "https://fahadriaz.com",
       "sameAs": [
         "https://www.instagram.com/fahadriazzz/",
@@ -347,7 +348,7 @@
       /* the cinematic figure */
       .hero-figure{
         position:relative; z-index:2; order:-1;
-        width:min(72vw,330px); aspect-ratio:900/927; height:auto;
+        width:min(79vw,370px); aspect-ratio:900/927; height:auto;
         margin:6.5rem auto 0;
         background:url("./Public/fahad-hero-cutout.png") no-repeat center bottom;
         background-size:contain;
@@ -371,14 +372,6 @@
         margin:0 auto; padding:7rem var(--page-x) 3rem;
         display:flex; flex-direction:column; align-items:stretch; text-align:center; gap:1.4rem;
       }
-      .hero-eyebrow{
-        display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
-        gap:8px 12px; max-width:100%; text-align:center;
-        font-size:.72rem; letter-spacing:.24em; text-transform:uppercase; color:var(--blue-2);
-        font-weight:600; opacity:0;
-      }
-      .hero-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--blue); display:inline-block; box-shadow:0 0 10px var(--blue); }
-
       .hero-name{
         font-family:var(--display); font-weight:800; line-height:.98; margin:0;
         font-size:clamp(2.6rem, 9vw, 6rem); letter-spacing:-.01em;
@@ -392,14 +385,6 @@
         font-size:clamp(0.95rem, 2.2vw, 1.2rem); font-weight:400; color:var(--ink-soft);
         opacity:0;
       }
-
-      /* top info panels (label + value) */
-      .info-panels{ display:flex; gap:1.6rem; flex-wrap:wrap; justify-content:center; max-width:100%; opacity:0; }
-      .info-block{ max-width:220px; text-align:center; }
-      .info-block .k{ font-size:.62rem; letter-spacing:.24em; text-transform:uppercase;
-        color:var(--blue-2); font-weight:700; display:block; margin-bottom:8px; }
-      .info-block .v{ font-size:.86rem; color:var(--ink-soft); line-height:1.45; }
-      .info-block .v b{ color:var(--ink); font-weight:600; }
 
       /* overlapping stat cards with outlined numbers */
       .statcards{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:100%; opacity:0; }
@@ -443,10 +428,8 @@
         box-shadow:0 0 18px rgba(63,123,255,.45); }
 
       body.hero-loaded .hero-figure{ animation:heroFadeUp 900ms 40ms var(--ease) forwards; }
-      body.hero-loaded .hero-eyebrow{ animation:heroFadeUp 700ms 120ms var(--ease) forwards; }
       body.hero-loaded .hero-name{ animation:heroFadeUp 900ms 220ms var(--ease) forwards; }
       body.hero-loaded .hero-tagline{ animation:heroFadeUp 700ms 340ms var(--ease) forwards; }
-      body.hero-loaded .info-panels{ animation:heroFadeUp 700ms 440ms var(--ease) forwards; }
       body.hero-loaded .statcards{ animation:heroFadeUp 700ms 540ms var(--ease) forwards; }
       body.hero-loaded .hero-foot{ animation:heroFadeUp 700ms 640ms var(--ease) forwards; }
       body.hero-loaded .hero-scroll{ animation:heroFadeUp 700ms 740ms var(--ease) forwards; }
@@ -464,19 +447,16 @@
       @keyframes scrolldot{ 0%{transform:translateY(-100%)} 100%{transform:translateY(280%)} }
 
       /* desktop absolute composition — mirrors the reference layout */
-      @media (min-width:980px){
+      @media (min-width:1150px){
         .hero-wrap{ align-items:flex-start; justify-content:flex-end; text-align:left; padding:130px var(--page-x) 54px; min-height:100svh; }
-        .hero-eyebrow{ position:absolute; top:130px; left:var(--page-x); }
-        .info-panels{ position:absolute; top:128px; right:var(--page-x); justify-content:flex-end; }
-        .info-block{ text-align:left; }
         .statcards{ position:absolute; right:var(--page-x); bottom:122px; }
         .hero-foot{ align-items:flex-start; }
         .hero-actions{ justify-content:flex-start; }
         .hero-name{ max-width:11ch; }
         .hero-tagline{ max-width:38ch; }
         .hero-figure{
-          position:absolute; z-index:2; right:6%; bottom:0; order:0; margin:0;
-          width:min(50vw, 560px); height:90vh; max-height:920px;
+          position:absolute; z-index:2; right:4.5%; bottom:0; order:0; margin:0;
+          width:min(40vw, 630px); height:94vh; max-height:1000px;
         }
       }
 
@@ -538,8 +518,15 @@
         text-transform:uppercase; color:var(--ink-mute); }
       .stats-tag{ text-align:center; margin-top:1.75rem; font-size:.72rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-faint); }
       .stats-tag b{ color:var(--blue-2); font-weight:600; }
-      @media (max-width:900px){ .stats-grid{ grid-template-columns:repeat(3,1fr); } }
-      @media (max-width:560px){ .stats-grid{ grid-template-columns:repeat(2,1fr); } .stat{ padding:1.5rem 1rem; } }
+      @media (max-width:900px){
+        .stats-grid{ grid-template-columns:repeat(3,1fr); }
+        .stats-grid > :last-child{ grid-column:1 / -1; max-width:calc(33.333% - 9.34px); margin:0 auto; }
+      }
+      @media (max-width:560px){
+        .stats-grid{ grid-template-columns:repeat(2,1fr); }
+        .stat{ padding:1.5rem 1rem; }
+        .stats-grid > :last-child{ max-width:calc(50% - 7px); }
+      }
 
       /* ===================== ABOUT ===================== */
       .about-body{ display:grid; grid-template-columns:0.8fr 1fr; gap:56px; align-items:center; max-width:var(--content-max); margin:0 auto; }
@@ -620,8 +607,14 @@
       }
       .social-card:hover .social-icon-wrap{ color:var(--blue-bri); border-color:var(--blue-2); transform:rotate(8deg) scale(1.08); }
       .social-platform-name{ font-size:.82rem; font-weight:600; color:var(--ink); letter-spacing:.03em; }
-      @media (max-width:900px){ .social-grid{ grid-template-columns:repeat(3,1fr); } }
-      @media (max-width:560px){ .social-grid{ grid-template-columns:repeat(2,1fr); } }
+      @media (max-width:900px){
+        .social-grid{ grid-template-columns:repeat(3,1fr); }
+        .social-grid > :last-child{ grid-column:1 / -1; max-width:calc(33.333% - 9.34px); margin:0 auto; }
+      }
+      @media (max-width:560px){
+        .social-grid{ grid-template-columns:repeat(2,1fr); }
+        .social-grid > :last-child{ max-width:calc(50% - 7px); }
+      }
 
       /* ===================== IMPACT ===================== */
       .impact-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:var(--maxw); margin:0 auto; }
@@ -656,7 +649,7 @@
           --content-gap: .9rem;
         }
         .hero-wrap{ padding:1.25rem 1.1rem 2.5rem; }
-        .hero-figure{ margin:5.5rem auto 0; width:min(72vw,300px); }
+        .hero-figure{ margin:5rem auto 0; width:min(79vw,330px); }
       }
       @media (max-width:480px){
         html{ font-size:14px; }
@@ -716,22 +709,9 @@
              data-pspeed="-0.05" data-mx="-16" data-my="-7" data-base="translateZ(0)"></div>
 
         <div class="hero-wrap">
-          <p class="hero-eyebrow"><span class="dot"></span> Dubai &middot; United Arab Emirates</p>
-
           <h1 class="hero-name">Fahad Riaz</h1>
 
           <p class="hero-tagline">Building Scalable Businesses Globally.</p>
-
-          <div class="info-panels">
-            <div class="info-block">
-              <span class="k">Sectors</span>
-              <span class="v">Automotive &middot; Real Estate &middot; Fintech</span>
-            </div>
-            <div class="info-block">
-              <span class="k">Reach</span>
-              <span class="v"><b>10,000+</b> cars &middot; <b>50+</b> countries</span>
-            </div>
-          </div>
 
           <div class="statcards">
             <div class="statcard glass">
@@ -746,7 +726,7 @@
 
           <div class="hero-foot">
             <div class="hero-actions">
-              <a href="#ventures" class="btn btn-primary">Explore the Ecosystem <span class="arrow">&rarr;</span></a>
+              <a href="#ventures" class="btn btn-primary">Explore the Ventures <span class="arrow">&rarr;</span></a>
               <a href="#about" class="btn btn-ghost">The Story</a>
             </div>
             <div class="hero-social">
@@ -824,7 +804,7 @@
 
             <blockquote class="pull">“Build systems. Create leverage. Expand across continents.”</blockquote>
 
-            <p>Fahad Riaz is a Dubai-based entrepreneur recognized for driving record-breaking sales and market presence across Milele's multi-vertical ecosystem. His edge isn't hype; it's turning complex challenges into structured systems that scale, backed by disciplined growth and long-term value creation across international markets including Africa, Asia, and the Middle East.</p>
+            <p>Fahad Riaz is a Dubai-based entrepreneur recognized for driving record-breaking sales and market presence across Milele's multi-vertical ventures. His edge isn't hype; it's turning complex challenges into structured systems that scale, backed by disciplined growth and long-term value creation across international markets including Africa, Asia, and the Middle East.</p>
 
             <div class="about-pills">
               <span class="pill">Operational Excellence</span>
@@ -843,9 +823,9 @@
       <!-- ══════════ VENTURES ══════════ -->
       <section id="ventures" class="page-section reveal">
         <div class="section-head">
-          <span class="kicker">The Ecosystem</span>
+          <span class="kicker">The Ventures</span>
           <h2 class="section-title">One engine. <span class="italic">Many verticals.</span></h2>
-          <p class="section-intro">Milele operates as an integrated ecosystem, tackling complex challenges with clarity and speed: from tax-free vehicle export and procurement to car rental, luxury real estate, and fintech. Each vertical strengthens the next.</p>
+          <p class="section-intro">Milele operates as integrated ventures, tackling complex challenges with clarity and speed: from tax-free vehicle export and procurement to car rental, luxury real estate, and fintech. Each vertical strengthens the next.</p>
         </div>
 
         <div class="venture-grid">
