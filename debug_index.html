@@ -886,6 +886,16 @@
           </article>
 
           <article class="venture glass">
+            <span class="venture-meta">Property Development</span>
+            <div class="venture-head">
+              <div class="venture-icon"><img src="./Public/ventures/milele-Developments.svg" alt="" width="34" height="34" loading="lazy" /></div>
+              <h3>Milele Real Estate</h3>
+            </div>
+            <p>Visionary real estate development focused on luxury living and strategic urban projects. Building spaces where design meets functionality, creating environments that elevate everyday life.</p>
+            <a href="#" class="venture-link">Portfolio</a>
+          </article>
+
+          <article class="venture glass">
             <span class="venture-meta">Fintech Platform</span>
             <div class="venture-head">
               <div class="venture-icon"><img src="./Public/ventures/milele-Prime.svg" alt="" width="34" height="34" loading="lazy" /></div>
@@ -1156,7 +1166,7 @@
           "@type": "SiteNavigationElement",
           "position": 2,
           "name": "Ventures & Businesses",
-          "description": "Milele Motors, Milele Car Rental, Milele Luxury, Milele Prime, and Milele Properties.",
+          "description": "Milele Motors, Milele Car Rental, Milele Real Estate, Milele Luxury, Milele Prime, and Milele Properties.",
           "url": "https://fahadriaz.com/#ventures"
         },
         {
@@ -1210,5 +1220,25 @@
       ]
     }
     </script>
-  </body>
+  
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const badge = document.createElement('div');
+    badge.style.cssText = 'position:fixed;top:0;left:0;z-index:99999;background:red;color:#fff;font-size:20px;padding:10px;font-family:monospace;';
+    const bodyW = document.body.scrollWidth;
+    const innerW = window.innerWidth;
+    const docElW = document.documentElement.scrollWidth;
+    let widest = null, widestW = 0;
+    document.querySelectorAll('#hero, #hero *').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.right > widestW) { widestW = r.right; widest = el; }
+    });
+    badge.textContent = `body:${bodyW} inner:${innerW} docEl:${docElW} widest:${widest ? (widest.className||widest.tagName) : 'none'}@${widestW.toFixed(0)}`;
+    document.body.appendChild(badge);
+  }, 800);
+});
+</script>
+</body>
+
 </html>
