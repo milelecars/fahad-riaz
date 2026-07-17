@@ -462,6 +462,13 @@
         }
       }
 
+      /* one size up on larger screens */
+      @media (min-width:1600px){
+        .hero-figure{
+          width:min(48vw, 800px); height:97vh; max-height:1160px;
+        }
+      }
+
       /* ===================== page-section / box shell ===================== */
       .page-section{ width:100%; padding:var(--section-y) var(--page-x); }
       .inner{ width:100%; max-width:var(--maxw); margin:0 auto; }
