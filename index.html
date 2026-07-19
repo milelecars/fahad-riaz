@@ -231,9 +231,10 @@
       /* ===== cursor glow (desktop only) ===== */
       .cursor-glow{
         position:fixed; top:0; left:0; width:380px; height:380px; z-index:5;
-        border-radius:50%; pointer-events:none; transform:translate(-50%,-50%);
+        border-radius:50%; pointer-events:none; transform:translate3d(-50%,-50%,0);
         background:radial-gradient(circle, rgba(63,123,255,.16), transparent 65%);
         transition:opacity .4s; opacity:0; mix-blend-mode:screen;
+        will-change:transform; contain:layout paint;
       }
 
       /* ===== scroll progress ===== */
@@ -458,14 +459,14 @@
         .hero-tagline{ max-width:38ch; }
         .hero-figure{
           position:absolute; z-index:2; right:4.5%; bottom:0; order:0; margin:0;
-          width:min(44vw, 690px); height:94vh; max-height:1000px;
+          width:min(50vw, 800px); height:98vh; max-height:1120px;
         }
       }
 
       /* one size up on larger screens */
       @media (min-width:1600px){
         .hero-figure{
-          width:min(48vw, 800px); height:97vh; max-height:1160px;
+          width:min(54vw, 920px); height:100vh; max-height:1280px;
         }
       }
 
@@ -688,7 +689,6 @@
     <!-- ══════════ NAVBAR ══════════ -->
     <header id="site-nav">
       <a href="#top" class="brand" aria-label="Fahad Riaz home">
-        <span class="brand-mark">FR</span>
         <span class="brand-name">Fahad&nbsp;Riaz</span>
       </a>
 
@@ -1082,11 +1082,17 @@
       // ── Cursor glow — fine-pointer (desktop) only ──
       if (window.matchMedia('(pointer: fine)').matches) {
         const glow = document.getElementById('cursorGlow');
+        let gx = 0, gy = 0, glowShown = false, glowQueued = false;
+        const paintGlow = () => {
+          glowQueued = false;
+          glow.style.transform = `translate3d(${gx}px, ${gy}px, 0) translate(-50%,-50%)`;
+        };
         window.addEventListener('mousemove', (e) => {
-          glow.style.opacity = '1';
-          glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
+          gx = e.clientX; gy = e.clientY;
+          if (!glowShown) { glow.style.opacity = '1'; glowShown = true; }
+          if (!glowQueued) { glowQueued = true; requestAnimationFrame(paintGlow); }
         }, { passive: true });
-        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; glowShown = false; });
 
         // ── Hero mouse parallax — ghost type + figure drift with cursor ──
         const hero = document.getElementById('hero');
