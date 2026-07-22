@@ -233,8 +233,8 @@
         position:fixed; top:0; left:0; width:380px; height:380px; z-index:5;
         border-radius:50%; pointer-events:none; transform:translate3d(-50%,-50%,0);
         background:radial-gradient(circle, rgba(63,123,255,.16), transparent 65%);
-        transition:opacity .4s; opacity:0; mix-blend-mode:screen;
-        will-change:transform; contain:layout paint;
+        transition:opacity .4s; opacity:0;
+        will-change:transform; contain:layout style paint;
       }
 
       /* ===== scroll progress ===== */
@@ -1082,15 +1082,12 @@
       // ── Cursor glow — fine-pointer (desktop) only ──
       if (window.matchMedia('(pointer: fine)').matches) {
         const glow = document.getElementById('cursorGlow');
-        let gx = 0, gy = 0, glowShown = false, glowQueued = false;
-        const paintGlow = () => {
-          glowQueued = false;
-          glow.style.transform = `translate3d(${gx}px, ${gy}px, 0) translate(-50%,-50%)`;
-        };
-        window.addEventListener('mousemove', (e) => {
-          gx = e.clientX; gy = e.clientY;
+        let glowShown = false;
+        // Browsers already coalesce pointer moves to one per frame, so write the
+        // transform straight away — deferring to rAF only adds a frame of lag.
+        window.addEventListener('pointermove', (e) => {
+          glow.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%,-50%)`;
           if (!glowShown) { glow.style.opacity = '1'; glowShown = true; }
-          if (!glowQueued) { glowQueued = true; requestAnimationFrame(paintGlow); }
         }, { passive: true });
         document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; glowShown = false; });
 
