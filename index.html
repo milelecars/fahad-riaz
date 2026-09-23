@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FE19QV63JC"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -14,7 +14,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fahad Riaz | Building Scalable Businesses Globally</title>
-    <meta name="description" content="Fahad Riaz, Business Leader and Directing Manager of Milele. Exporting 10,000+ cars annually to 50+ countries, 6.2M+ global audience. Ventures: Milele Motors, Car Rental, Real Estate, Fintech. Based in Dubai, UAE." />
+    <meta name="description" content="Fahad Riaz, Business Leader and Directing Manager of Milele. Exporting 10,000+ cars annually to 50+ countries, 8.1M+ global audience, US$2.1B+ combined business worth. Ventures: Milele Motors, Car Rental, Real Estate, Fintech. Based in Dubai, UAE." />
     <meta name="keywords" content="Fahad Riaz, Milele Motors, Dubai entrepreneur, business leader UAE, Milele car rental, Milele developments, automotive export Dubai, UAE business operations, Milele properties, luxury car export" />
     <meta name="author" content="Fahad Riaz" />
     <link rel="canonical" href="https://fahadriaz.com/" />
@@ -30,6 +30,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="./Public/fahad-hero-cutout.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -59,7 +60,7 @@
         "fahadriazzz"
       ],
       "jobTitle": "Entrepreneur & CEO",
-      "description": "Fahad Riaz is a Dubai-based entrepreneur and the driving force behind Milele's multi-vertical ventures, spanning automotive export, car rental, luxury real estate and fintech. With over 10,000 cars exported annually to 50+ countries and a global social media audience exceeding 6.2 million, Fahad is one of Dubai's most prominent business leaders.",
+      "description": "Fahad Riaz is a Dubai-based entrepreneur and the driving force behind Milele's multi-vertical ventures, spanning automotive export, car rental, luxury real estate and fintech. With over 10,000 cars exported annually to 50+ countries and a global social media audience exceeding 8.1 million and businesses worth a combined US$2.1 billion, Fahad is one of Dubai's most prominent business leaders.",
       "url": "https://fahadriaz.com",
       "sameAs": [
         "https://www.instagram.com/fahadriazzz/",
@@ -204,17 +205,26 @@
       }
 
       /* ===== drifting smoke / fog ===== */
-      .smoke{ position:fixed; top:-10%; left:-10%; width:120vw; height:120dvh; z-index:-2; pointer-events:none; opacity:.5; }
+      .smoke{ position:fixed; top:-10%; left:-10%; width:120vw; height:120dvh; z-index:-2; pointer-events:none; opacity:.5; overflow:hidden; }
       .smoke::before, .smoke::after{
         content:""; position:absolute; inset:0;
         background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.018' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.55  0 0 0 0 1  0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
         background-size:1100px 1100px; mix-blend-mode:screen;
         filter:blur(6px);
       }
-      .smoke::before{ opacity:.5; animation:drift1 60s linear infinite; }
-      .smoke::after{ opacity:.32; background-position:240px 120px; transform:scale(1.3); animation:drift2 90s linear infinite; }
-      @keyframes drift1{ to{ background-position:1100px -300px; } }
-      @keyframes drift2{ to{ background-position:-900px 500px; } }
+      /* Drift with compositor-only transforms (not background-position, which repaints
+         the whole blurred noise layer every frame and stalls the cursor glow).
+         Each layer is oversized by one 1100px tile and moves exactly one tile per axis
+         loop, so it wraps seamlessly; x and y run on separate properties to keep the
+         original speeds. */
+      .smoke::before{ inset:0 0 -1100px -1100px; opacity:.5; will-change:transform, translate;
+        animation:drift1x 60s linear infinite, drift1y 220s linear infinite; }
+      .smoke::after{ inset:-1100px -1100px 0 0; opacity:.32; background-position:240px 120px; scale:1.3; will-change:transform, translate;
+        animation:drift2x 110s linear infinite, drift2y 198s linear infinite; }
+      @keyframes drift1x{ to{ transform:translate3d(1100px,0,0); } }
+      @keyframes drift1y{ to{ translate:0 -1100px; } }
+      @keyframes drift2x{ to{ transform:translate3d(-1100px,0,0); } }
+      @keyframes drift2y{ to{ translate:0 1430px; } }
 
       /* ===== ambient orbs ===== */
       .ambient{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:-2; pointer-events:none; overflow:hidden; }
@@ -353,7 +363,7 @@
         position:relative; z-index:2; order:-1;
         width:min(82vw,410px); aspect-ratio:900/927; height:auto;
         margin:6.5rem auto 0;
-        background:url("./Public/fahad-hero-cutout.png") no-repeat center bottom;
+        background:url("./Public/fahad-hero-cutout.webp") no-repeat center bottom;
         background-size:contain;
         filter:drop-shadow(0 36px 70px rgba(0,0,8,.7)) contrast(1.03);
         opacity:0;
@@ -515,7 +525,7 @@
       .sky-text.sky-visible{ opacity:1; letter-spacing:.06em; }
 
       /* ===================== STATS ===================== */
-      .stats-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; max-width:var(--maxw); margin:0 auto; }
+      .stats-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:14px; max-width:var(--maxw); margin:0 auto; }
       .stat{ border-radius:var(--r-md); padding:2rem 1.4rem; text-align:center; transition:.4s var(--ease); }
       .stat:hover{ transform:translateY(-6px); border-color:var(--blue-2); box-shadow:var(--shadow), 0 0 32px rgba(63,123,255,.18); }
       .stat-num{
@@ -528,14 +538,12 @@
         text-transform:uppercase; color:var(--ink-mute); }
       .stats-tag{ text-align:center; margin-top:1.75rem; font-size:.72rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-faint); }
       .stats-tag b{ color:var(--blue-2); font-weight:600; }
-      @media (max-width:900px){
+      @media (max-width:1100px){
         .stats-grid{ grid-template-columns:repeat(3,1fr); }
-        .stats-grid > :last-child{ grid-column:1 / -1; max-width:calc(33.333% - 9.34px); margin:0 auto; }
       }
       @media (max-width:560px){
         .stats-grid{ grid-template-columns:repeat(2,1fr); }
         .stat{ padding:1.5rem 1rem; }
-        .stats-grid > :last-child{ max-width:calc(50% - 7px); }
       }
 
       /* ===================== ABOUT ===================== */
@@ -767,8 +775,12 @@
       <section class="page-section reveal" id="stats" style="padding-bottom:2rem;">
         <div class="stats-grid">
           <div class="stat glass">
-            <span class="stat-num" data-target="6.2" data-decimals="1" data-suffix="M+">0</span>
+            <span class="stat-num" data-target="8.1" data-decimals="1" data-suffix="M+">0</span>
             <span class="stat-label">Global Audience</span>
+          </div>
+          <div class="stat glass">
+            <span class="stat-num" data-target="2.1" data-decimals="1" data-prefix="$" data-suffix="B+">$0</span>
+            <span class="stat-label">Combined Business Worth</span>
           </div>
           <div class="stat glass">
             <span class="stat-num" data-target="5000" data-suffix="+">0</span>
@@ -800,7 +812,7 @@
         <div class="about-body">
           <div class="about-portrait">
             <div class="portrait-frame glass">
-              <img src="./Public/fahad.svg" alt="Fahad Riaz" loading="lazy" />
+              <img src="./Public/fahad.webp" alt="Fahad Riaz" width="1009" height="1840" loading="lazy" decoding="async" />
               <div class="portrait-tag">
                 <span class="tag-k">Based in</span>
                 <span class="tag-v">Dubai, UAE</span>
@@ -843,12 +855,12 @@
 
           <article class="venture glass span-2">
             <div class="venture-media">
-              <img src="./Public/fahad12.webp" alt="Milele Motors" loading="lazy" />
+              <img src="./Public/fahad12-2000.webp" alt="Milele Motors" width="2000" height="1019" loading="lazy" decoding="async" />
             </div>
             <div class="venture-text">
               <span class="venture-meta">Automotive Export</span>
               <div class="venture-head">
-                <div class="venture-icon"><img src="./Public/ventures/milele-Motors.svg" alt="" width="34" height="34" loading="lazy" /></div>
+                <div class="venture-icon"><img src="./Public/ventures/milele-Motors.webp" alt="" width="34" height="34" loading="lazy" decoding="async" /></div>
                 <h3>Milele Motors</h3>
               </div>
               <p>Tax-free automotive export powerhouse serving Africa, Asia, and the Middle East. End-to-end vehicle procurement, export management, and logistics, delivering seamless cross-border mobility solutions at scale.</p>
@@ -859,7 +871,7 @@
           <article class="venture glass">
             <span class="venture-meta">Luxury Vehicles</span>
             <div class="venture-head">
-              <div class="venture-icon"><img src="./Public/ventures/milele-Luxury.svg" alt="" width="34" height="34" loading="lazy" /></div>
+              <div class="venture-icon"><img src="./Public/ventures/milele-Luxury.webp" alt="" width="34" height="34" loading="lazy" decoding="async" /></div>
               <h3>Milele Luxury Cars</h3>
             </div>
             <p>Premium automotive experiences curated for discerning clients. From exotic sports cars to luxury sedans: access to the world's finest vehicles with white-glove service and exclusive fleet options.</p>
@@ -869,7 +881,7 @@
           <article class="venture glass">
             <span class="venture-meta">Mobility Solutions</span>
             <div class="venture-head">
-              <div class="venture-icon"><img src="./Public/ventures/milele-Car-Rental.svg" alt="" width="34" height="34" loading="lazy" /></div>
+              <div class="venture-icon"><img src="./Public/ventures/milele-Car-Rental.webp" alt="" width="34" height="34" loading="lazy" decoding="async" /></div>
               <h3>Milele Car Rental</h3>
             </div>
             <p>Short and long-term vehicle rental solutions powered by technology and operational precision. Flexible mobility options for business travelers and residents, backed by responsive service.</p>
@@ -879,7 +891,7 @@
           <article class="venture glass">
             <span class="venture-meta">Fintech Platform</span>
             <div class="venture-head">
-              <div class="venture-icon"><img src="./Public/ventures/milele-Prime.svg" alt="" width="34" height="34" loading="lazy" /></div>
+              <div class="venture-icon"><img src="./Public/ventures/milele-Prime.webp" alt="" width="34" height="34" loading="lazy" decoding="async" /></div>
               <h3>Milele Prime</h3>
             </div>
             <p>Trade smarter with a platform built for today's markets. Milele Prime delivers fast execution, powerful tools, and global access, giving you the confidence and control to perform at every level.</p>
@@ -889,7 +901,7 @@
           <article class="venture glass">
             <span class="venture-meta">Luxury Brokerage</span>
             <div class="venture-head">
-              <div class="venture-icon"><img src="./Public/ventures/milele-Properties.svg" alt="" width="34" height="34" loading="lazy" /></div>
+              <div class="venture-icon"><img src="./Public/ventures/milele-Properties.webp" alt="" width="34" height="34" loading="lazy" decoding="async" /></div>
               <h3>Milele Properties</h3>
             </div>
             <p>Luxury property solutions and real estate services for investors and residents. Strategic acquisitions, premium listings, and property management, making high-end real estate access seamless and transparent.</p>
@@ -950,7 +962,7 @@
         <div class="impact-grid">
           <article class="impact-card glass">
             <div class="impact-media">
-              <img src="./Public/impact/mosque.webp" alt="Mosque Construction in Pakistan" loading="lazy" />
+              <img src="./Public/impact/mosque.webp" alt="Mosque Construction in Pakistan" width="1024" height="1024" loading="lazy" decoding="async" />
             </div>
             <div class="impact-body">
               <h3>Mosque Construction: Pakistan</h3>
@@ -960,7 +972,7 @@
 
           <article class="impact-card glass">
             <div class="impact-media">
-              <img src="./Public/impact/water-well.png" alt="Clean Water Wells in Sub-Saharan Africa" loading="lazy" />
+              <img src="./Public/impact/water-well-848x503.webp" alt="Clean Water Wells in Sub-Saharan Africa" width="848" height="503" loading="lazy" decoding="async" />
             </div>
             <div class="impact-body">
               <h3>Water Wells: Sub-Saharan Africa</h3>
@@ -970,7 +982,7 @@
 
           <article class="impact-card glass">
             <div class="impact-media">
-              <img src="./Public/impact/education.webp" alt="Education and Youth Development" loading="lazy" />
+              <img src="./Public/impact/education.webp" alt="Education and Youth Development" width="1008" height="1008" loading="lazy" decoding="async" />
             </div>
             <div class="impact-body">
               <h3>Scholarships &amp; Learning Initiatives</h3>
@@ -1051,13 +1063,14 @@
       function animateStat(el) {
         const target = parseFloat(el.dataset.target);
         const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const prefix = el.dataset.prefix || '';
         const suffix = el.dataset.suffix || '';
         const duration = 1400;
         const start = performance.now();
         function tick(now) {
           const p = Math.min(1, (now - start) / duration);
           const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = (target * eased).toFixed(decimals) + suffix;
+          el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
@@ -1157,7 +1170,7 @@
           "@type": "SiteNavigationElement",
           "position": 3,
           "name": "Social Media",
-          "description": "Follow Fahad Riaz on Instagram, TikTok, YouTube, and Facebook. 6.2M+ global audience.",
+          "description": "Follow Fahad Riaz on Instagram, TikTok, YouTube, and Facebook. 8.1M+ global audience.",
           "url": "https://fahadriaz.com/#socials"
         },
         {
